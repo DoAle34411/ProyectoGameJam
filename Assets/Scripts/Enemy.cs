@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
@@ -16,6 +17,8 @@ public class Enemy : MonoBehaviour
     private float tintDuration = 2.0f;
     private bool isTinting = false;
 
+    private Animator animator; // Add this line
+
     void Start()
     {
         enemyAgent = GetComponent<NavMeshAgent>();
@@ -24,6 +27,14 @@ public class Enemy : MonoBehaviour
         if (enemyAgent == null)
         {
             Debug.LogError("NavMeshAgent component is missing from the enemy!");
+        }
+
+        animator = GetComponentInChildren<Animator>(); // Initialize the Animator component
+
+        // Debugging: Check if Animator is correctly initialized
+        if (animator == null)
+        {
+            Debug.LogError("Animator component is missing from the enemy!");
         }
     }
 
@@ -37,7 +48,6 @@ public class Enemy : MonoBehaviour
             enemyAgent.SetDestination(playerTransform.position);
 
             float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
-
 
             if (distanceToPlayer <= attackRange && Time.time >= nextAttackTime)
             {
@@ -60,6 +70,7 @@ public class Enemy : MonoBehaviour
     {
         TintScreen();
         ReduceHealthBar();
+        animator.SetTrigger("Attack");
     }
 
     void TintScreen()
@@ -81,6 +92,11 @@ public class Enemy : MonoBehaviour
         {
             healthBar.fillAmount -= 0.1f;
             healthBar.fillAmount = Mathf.Clamp(healthBar.fillAmount, 0f, 1f); // Ensure it stays within 0 to 1 range
+
+            if (healthBar.fillAmount == 0f)
+            {
+                SceneManager.LoadScene("GameOverMenu");
+            }
         }
     }
 

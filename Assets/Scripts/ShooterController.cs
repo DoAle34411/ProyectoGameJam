@@ -5,6 +5,7 @@ using UnityEngine;
 public class ShooterController : MonoBehaviour
 {
     public GameObject bulletPrefab;  // The bullet prefab to instantiate
+    public GameObject explosionPrefab;  // The explosion prefab to instantiate
     public float bulletSpeed = 30f;  // Speed at which the bullet will move
     public float bulletLifetime = 3f;
     public AudioClip damageSoundClip;  // The sound clip to play when shooting
@@ -46,9 +47,17 @@ public class ShooterController : MonoBehaviour
             bulletRigidbody.velocity = transform.forward * bulletSpeed;
         }
 
+        // Create explosion prefab
+        GameObject explosion = Instantiate(explosionPrefab, bullet.transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(1f);
+        Destroy(explosion);
+
         yield return new WaitForSeconds(bulletLifetime);
 
         Destroy(bullet);
+
+        // Destroy explosion after 1 second
+        
 
         canShoot = true;
     }

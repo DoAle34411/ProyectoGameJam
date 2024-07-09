@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 709a262907617004b9078aea7c1114d2
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - MenuMusic: {fileID: 8300000, guid: 2acb9a1dd2a33ec4e96c53d279e610fb, type: 3}
+  - LevelMusic: {fileID: 8300000, guid: 257a563cca13d0c418ef38ee0b8613b7, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

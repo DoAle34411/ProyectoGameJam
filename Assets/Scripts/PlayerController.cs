@@ -86,5 +86,15 @@ public class PlayerController : MonoBehaviour
             agent.nextPosition = rb.position;
         }
     }
+    void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ramp"))
+        {
+            Rigidbody rb = GetComponent<Rigidbody>();
+            // Apply force to counteract sliding
+            rb.AddForce(new Vector3(0, 20f, 0));
+        }
+    }
+
 }
 
